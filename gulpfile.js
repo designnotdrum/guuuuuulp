@@ -23,6 +23,18 @@ gulp.task('js', function(){
 
 // Compile LESS files.
 
+gulp.task('concat-components-less', function(){
+	gulp.src('./less/components/*.less')
+		.pipe(concat('all.less'))
+		.pipe(gulp.dest('./less/components'));
+});
+
+gulp.task('concat-modules-less', function(){
+	gulp.src('./less/modules/*.less')
+		.pipe(concat('all.less'))
+		.pipe(gulp.dest('./less/modules'));
+});
+
 gulp.task('less', function(){
 	gulp.src('less/all.less')
 		.pipe(less())
@@ -48,10 +60,10 @@ gulp.task('clean-css', function(){
 // Watch files for changes and reload when they occur.
 
 gulp.task('watch', function(){
-	gulp.watch({ glob: './js/**/*.js'}, ['js'], ['clean-scripts']);
-	gulp.watch({ glob: './less/**/*.less'}, ['less'], ['clean-css']);
+	gulp.watch('./js/**/*.js', ['js'], ['clean-scripts']);
+	gulp.watch('./less/**/*.less', ['concat-components-less'], ['concat-modules-less'], ['less'], ['clean-css']);
 });
 
 // The default task.
 
-gulp.task('default', ['js','clean-scripts','less','clean-css','watch']);
+gulp.task('default', ['js','clean-scripts','concat-components-less','concat-modules-less','less','clean-css','watch']);
