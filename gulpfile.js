@@ -24,14 +24,17 @@ gulp.task('js', function(){
 // Compile LESS files.
 
 gulp.task('concat-components-less', function(){
-	gulp.src('./less/components/*.less')
-		.pipe(concat('all.less'))
+	gulp.src('less/components/*.less')
+		//.pipe(concat('components.less'))
+		.pipe(less())
+		.pipe(rename('components.less'))
 		.pipe(gulp.dest('./less/components'));
 });
 
 gulp.task('concat-modules-less', function(){
-	gulp.src('./less/modules/*.less')
-		.pipe(concat('all.less'))
+	gulp.src('less/modules/*.less')
+		.pipe(less())
+		.pipe(rename('modules.less'))
 		.pipe(gulp.dest('./less/modules'));
 });
 
